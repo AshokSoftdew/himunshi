@@ -1,0 +1,115 @@
+<div class="example-container">
+  <div fxFlex  fxLayout="row" fxLayout.lt-lg="column" >
+     <div fxFlexFill>
+         <mat-form-field style="width: 20%;">
+           <mat-select class="form-control" name="countryid" id="countryid" placeholder="Select Country" [(value)]="selectedCountries"  multiple >
+             <mat-option *ngFor="let country of countryList" [value]="country.id">{{country.name}}</mat-option>
+           </mat-select>
+         </mat-form-field>  &nbsp; &nbsp;
+
+      <!--    <mat-form-field style="width: 18%;">
+           <mat-select class="form-control" name="states" id="states" placeholder="Select States" [(value)]="selectedStates"  multiple >
+             <mat-option *ngFor="let state of states" [value]="state.id">{{state.name}}</mat-option>   
+           </mat-select>
+         </mat-form-field> &nbsp; &nbsp; -->
+
+         <mat-form-field style="width: 25%;">
+           <mat-select class="form-control" name="usertypes" id="usertypes" placeholder="Select User Types"  [(value)]="selectedUserType" multiple >
+             <mat-option *ngFor="let usertype of usertypes" [value]="usertype.id">{{usertype.userType}}</mat-option>
+           </mat-select>
+         </mat-form-field> &nbsp; &nbsp;
+
+         <mat-form-field style="width: 25%;">
+           <mat-select class="form-control" name="userstatus" id="userstatus" [(value)]="ActiveInactiveList" placeholder="User Status"  >
+             <mat-option  value="0">Inactive Users</mat-option>
+             <mat-option  value="1">Active Users</mat-option>
+           </mat-select>
+         </mat-form-field> &nbsp; &nbsp;
+
+         <mat-form-field style="width: 25%;">
+         
+            <input matInput name="radius" id="radius"  [(value)]="radius" placeholder="Enter Radius Range">
+          
+        </mat-form-field> &nbsp; &nbsp;
+
+     </div>
+ </div>
+ 
+ <br />
+ <div fxFlex  fxLayout="row" fxLayout.lt-lg="column" >
+   <div fxFlexFill>
+    
+     <!-- <mat-form-field style="width: 22%;"> -->
+      <div class="example-loading-shade" *ngIf="isLoadingResults">
+        <mat-spinner  style="font-size: 16px;" *ngIf="isLoadingResults"></mat-spinner>
+      </div>
+      <button mat-raised-button  color="primary" class="w-100" (click)="filterDetails()">Filter Data</button> 
+     
+   <!-- </mat-form-field> -->
+   
+   </div>
+ </div>
+
+
+
+
+</div>
+
+
+
+<br /> <br />
+<div class="mb-20" flFlex flexLayout="row" flexLayout.lt-md="column">
+<div fxFlex>
+               
+    <!-- <mat-form-field>
+      <input matInput placeholder="filter" (keyup)="applyFilter($event.target.value)">
+    </mat-form-field> -->
+    
+    <!-- <div #mapContainer id="map"></div> -->
+    <agm-map 
+  [latitude]="lat"
+  [longitude]="lng"
+  [zoom]="zoom"
+  [disableDefaultUI]="false"
+  [zoomControl]="false"
+  >
+  <!-- (mapClick)="mapClicked($event)" -->
+
+  <!-- (markerClick)="clickedMarker(m.label, i)" -->
+  <agm-marker  *ngFor="let m of markers; let i = index"  [latitude]="m.lat"  [longitude]="m.lng" [label]="m.label" [markerDraggable]="m.draggable" (dragEnd)="markerDragEnd(m, $event)">
+      
+     <agm-info-window>
+              
+                <table border="0">
+                <tr>
+                  <th align="left" style="font-size: 12px;"><strong> {{m.person_name}}</strong></th>
+                  <th>&nbsp;</th>
+                  <th align="right" style="font-size: 12px;"><strong> {{m.mobile}} </strong></th>
+                </tr>
+                <tr *ngIf="m.addressCheck">
+                  <th colspan="3"><br /></th>
+                </tr>
+                <tr *ngIf="m.addressCheck">
+                  <td colspan="3" style="font-size: 10px;"> {{m.address}}  <span *ngIf="m.pincode"> - {{m.pincode}}</span> 
+                   <!--  <span *ngIf="m.city" >,{{m.city}}</span><br />{{m.state}} <span *ngIf="m.country">, {{m.country}}</span> --></td>
+                </tr>
+              </table>
+    </agm-info-window>
+    
+  </agm-marker>
+  
+  <agm-circle [latitude]="lat + 0.3" [longitude]="lng" 
+      [radius]="5000"
+      [fillColor]="'green'"
+      [circleDraggable]="true"
+      [editable]="true">
+  </agm-circle>
+
+</agm-map>
+
+  
+       
+      
+       <!-- <mat-paginator [pageSizeOptions]="[15,30,50]" showFirstLastButtons></mat-paginator> -->
+</div>
+</div>

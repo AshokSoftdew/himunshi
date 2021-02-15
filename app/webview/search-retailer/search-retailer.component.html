@@ -1,0 +1,114 @@
+<mat-toolbar color="primary" style="top:0px;">
+  <!-- <img width="200" height="90" style="top:5px; margin-left: -50px;" src="{{ bukulogo }}" /> -->
+  <h2 class = "tp-h2">{{title}} </h2>
+</mat-toolbar>
+
+<div class="tp-messagebox">  
+  <div class="example-container">
+      <div fxFlex  fxLayout="row" fxLayout.lt-lg="column" >
+        <div fxFlexFill>
+            <mat-form-field>
+              <mat-select class="form-control" name="cateid" id="cateid" placeholder="Select Category" [(value)]="selectedCate" >
+                <mat-option *ngFor="let cate of bussinessCategoryList" [value]="cate.Id">{{cate.Label}}</mat-option>
+              </mat-select>
+            </mat-form-field>  &nbsp; &nbsp;
+    
+<!--           
+           <mat-form-field >
+              <mat-select class="form-control" name="usertypes" id="usertypes" placeholder="Select User Types"  [(value)]="selectedUserType" multiple >
+                <mat-option *ngFor="let usertype of usertypes" [value]="usertype.id">{{usertype.userType}}</mat-option>
+              </mat-select>
+            </mat-form-field> &nbsp; &nbsp; 
+     -->
+            <mat-form-field >
+            
+                <input matInput name="radius" id="radius"  [(value)]="radius" placeholder="Enter Radius Range">
+              
+            </mat-form-field> &nbsp; &nbsp;
+    
+        </div>
+    </div>
+
+</div>
+
+ 
+ 
+ <div fxFlex  fxLayout="row" fxLayout.lt-lg="column" >
+   <div fxFlexFill>
+    
+     <!-- <mat-form-field style="width: 22%;"> -->
+      <div class="example-loading-shade" *ngIf="isLoadingResults">
+        <mat-spinner  style="font-size: 16px;" *ngIf="isLoadingResults"></mat-spinner>
+      </div>
+      <button mat-raised-button  color="primary" class="w-100" (click)="filternbyBusinessCate()">Filter Data</button> 
+     
+   <!-- </mat-form-field> -->
+   
+   </div>
+ </div>
+
+
+
+
+</div>
+
+
+
+<br /> <br />
+
+<div class="mb-20" flFlex flexLayout="row" flexLayout.lt-md="column">
+<div fxFlex>
+               
+    <!-- <mat-form-field>
+      <input matInput placeholder="filter" (keyup)="applyFilter($event.target.value)">
+    </mat-form-field> -->
+    
+    <!-- <div #mapContainer id="map"></div> -->
+    <agm-map 
+  [latitude]="lat"
+  [longitude]="lng"
+  [zoom]="zoom"
+  [disableDefaultUI]="false"
+  [zoomControl]="false"
+  >
+  <!-- (mapClick)="mapClicked($event)" -->
+
+  <!-- (markerClick)="clickedMarker(m.label, i)" -->
+  <agm-marker  *ngFor="let m of markers; let i = index"  [latitude]="m.lat"  [longitude]="m.lng" [label]="m.label" [markerDraggable]="m.draggable" (dragEnd)="markerDragEnd(m, $event)">
+      
+     <agm-info-window>
+              
+                <table border="0">
+                <tr>
+                  <th colspan="2" style="font-size: 12px; text-align: left;"><strong> {{m.business_name}}</strong></th>
+                
+                  <th align="right" style="font-size: 12px;"><strong> {{m.mobile}} </strong></th>
+                </tr>
+                <tr *ngIf="m.addressCheck">
+                  <th colspan="3"><br /></th>
+                </tr>
+                <tr *ngIf="m.addressCheck">
+                  <td colspan="2" style="font-size: 10px;"> {{m.address}} <span *ngIf="m.city" >,{{m.city}}</span><br />{{m.state}} <span *ngIf="m.pincode"> - {{m.pincode}}</span> <span *ngIf="m.country">, {{m.country}}</span></td>
+                  <td><button *ngIf="m.ButtonShowHide" mat-raised-button class="md-button" color="accent" (click)="AddThisSellerToMyContact(m.user_id, this.userid)">Add Contact</button> </td>
+                </tr>
+              </table>
+    </agm-info-window>
+    
+  </agm-marker>
+  
+  <agm-circle [latitude]="lat + 0.3" [longitude]="lng" 
+      [radius]="5000"
+      [fillColor]="'green'"
+      [circleDraggable]="true"
+      [editable]="true">
+  </agm-circle>
+
+</agm-map>
+
+  
+       
+      
+       <!-- <mat-paginator [pageSizeOptions]="[15,30,50]" showFirstLastButtons></mat-paginator> -->
+</div>
+</div>
+

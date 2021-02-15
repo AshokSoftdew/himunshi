@@ -1,0 +1,41 @@
+<div id="sidebar">
+    <mat-nav-list>
+        <a mat-list-item [routerLinkActive]="'active'" [routerLink]="['/dashboard']">
+            <mat-icon class="sidenav-icon">dashboard</mat-icon> {{ 'Dashboard' | translate }}
+        </a>
+        <!-- <a mat-list-item [routerLinkActive]="'active'" [routerLink]="['/screen1']">
+            <mat-icon class="sidenav-icon">build</mat-icon> {{ 'Screen1' | translate }}
+        </a>
+        <a mat-list-item [routerLinkActive]="'active'" [routerLink]="['/screen2']">
+            <mat-icon class="sidenav-icon">people</mat-icon> {{ 'Screen2' | translate }}
+        </a>
+        <a mat-list-item  [routerLinkActive]="'active'" [routerLink]="['/brands']">
+            <mat-icon>loyalty</mat-icon> {{ 'Brand' | translate }}
+        </a> -->
+        <!-- <a mat-list-item  [routerLinkActive]="'active'" [routerLink]="['/category']">
+            <mat-icon>folder_open</mat-icon> {{ 'Category' | translate }}
+        </a>-->
+        <a mat-list-item  [routerLinkActive]="'active'" [routerLink]="['/sendbroadcast']">
+            <mat-icon>notifications_active</mat-icon> {{ 'Send Broadcast' | translate }}
+        </a>
+        <a mat-list-item  [routerLinkActive]="'active'" [routerLink]="['/bukusettings']">
+            <mat-icon>settings</mat-icon> {{ 'Munshi Settings' | translate }}
+        </a>
+        <a mat-list-item  [routerLinkActive]="'active'" [routerLink]="['/userdetails']">
+            <mat-icon>supervisor_account</mat-icon> {{ 'User Details' | translate }}
+        </a>
+        <a mat-list-item  [routerLinkActive]="'active'" [routerLink]="['/userkpidetails']">
+            <mat-icon>supervisor_account</mat-icon> {{ 'User KPI Details' | translate }}
+        </a> 
+        <a mat-list-item  [routerLinkActive]="'active'" [routerLink]="['/user-ledger']">
+            <mat-icon>supervisor_account</mat-icon> {{ 'User Ledgers' | translate }}
+        </a>
+       <!--  <a mat-list-item  [routerLinkActive]="'active'" [routerLink]="['/staff-service']">
+            <mat-icon>supervisor_account</mat-icon> {{ 'Featured Services' | translate }}
+        </a> -->
+        
+        <!-- <a mat-list-item  [routerLinkActive]="'active'" [routerLink]="['/searchshowonmap']">
+            <mat-icon> add_location</mat-icon> {{ 'Show On MAP' | translate }}
+        </a>-->
+    </mat-nav-list>
+</div>

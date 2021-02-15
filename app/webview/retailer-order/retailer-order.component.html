@@ -1,0 +1,403 @@
+<!--<div layout="row" layout-wrap style="
+ border-radius: 9px;
+ background: skyblue;
+ height:130px;
+ padding-top:10px;
+  ">
+  <div fxFlex="1%"> </div>
+  <div fxFlex="70%"  style="text-align: justify;font-size: 15px;color: black;     line-height: 1.4;">
+   <b> {{retailerDtl?.retailerName}} <br/>
+     {{retailerDtl?.address}} <br/>
+     {{retailerDtl?.state}} <br/>
+    GST No. : {{retailerDtl?.GST}}</b>
+  </div>
+  <div fxFlex="29%">
+    <div>Finacial Year</div>
+    <mat-form-field appearance="outline" style="width:100%;">
+      
+      <mat-select [(value)]="selectedFnYer"  placeholder="Select">
+        <mat-option value="18">18-19</mat-option>
+        <mat-option value="19" >19-20</mat-option>
+        <mat-option value="20">20-21</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+</div>-->
+
+
+<mat-accordion>
+  <mat-expansion-panel> <!-- (click)="openCollaspe()" -->
+    
+    <mat-expansion-panel-header>
+
+      <mat-panel-title>
+        
+        <div fxFlex="50%" >
+          <b style="font-size: 20px; margin-right: 0px;"> {{retailerDtl?.retailerName}}  </b><br>
+          <!-- <button color="primary" mat-raised-button >Edit</button> -->
+        </div>
+
+        <div fxFlex="50%" *ngIf="this.selectedTab">
+          <b> {{orderNo}} </b> <br/> (Edit Mode)
+        </div>
+
+
+      </mat-panel-title>
+
+      <mat-panel-description>
+        
+      </mat-panel-description>
+
+    </mat-expansion-panel-header>
+
+    <form [formGroup]="retaileDtlForm" novalidate (ngSubmit)="retailerPersonalDtl()">
+      <div layout="row" layout-wrap>
+        <div fxFlex="47%">
+          <mat-form-field class="example-full-width" style="width: 100%;">
+            <input matInput placeholder="name" formControlName="name">
+          </mat-form-field>
+          <mat-error *ngIf="!!retaileDtlForm.controls.name.errors?.required 
+            && !!retaileDtlForm.controls.name.touched ">Name is required</mat-error>
+        </div>
+        <div fxFlex="5%"></div>
+        <div fxFlex="48%">
+          <mat-form-field class="example-full-width" style="width: 100%;">
+            <input matInput placeholder="City" formControlName="city">
+          </mat-form-field>
+          <mat-error *ngIf="!!retaileDtlForm.controls.city.errors?.required 
+            && !!retaileDtlForm.controls.city.touched ">City is required</mat-error>
+
+        </div>
+      </div>
+      <br>
+
+      <div layout="row" layout-wrap>
+        <div fxFlex="47%">
+          <mat-form-field class="example-full-width" style="width: 100%;">
+            <!-- <input matInput placeholder="State" formControlName="state"> -->
+            <mat-select placeholder="Select State" formControlName="state">
+              <mat-option *ngFor="let state of statesList; let i = index" [value]="state.id">
+                {{ state.name }}</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-error *ngIf="!!retaileDtlForm.controls.state.errors?.required 
+          && !!retaileDtlForm.controls.state.touched ">State is required</mat-error>
+        </div>
+
+        <div fxFlex="5%"></div>
+        <div fxFlex="48%">
+          <mat-form-field class="example-full-width" style="width: 100%;">
+            <input matInput placeholder="Gstin No." formControlName="gst">
+          </mat-form-field>
+          <mat-error *ngIf="!!retaileDtlForm.controls.gst.errors?.required 
+            && !!retaileDtlForm.controls.gst.touched ">Gst no is required</mat-error>
+
+        </div>
+      </div>
+      <br>
+
+      <div layout="row" layout-wrap>
+        <div fxFlex="47%">
+          <mat-form-field style="width: 100%;">
+            <textarea matInput formControlName="address" placeholder="Address"></textarea>
+          </mat-form-field>
+        </div>
+        <div fxFlex="5%"></div>
+        <div fxFlex="48%">
+          <button color="primary" [disabled]="!retaileDtlForm.valid" mat-raised-button>Update</button>
+        </div>
+      </div>
+    </form>
+
+    <div layout="row" layout-wrap style="border-radius: 9px; height:90px; padding-top:10px;">
+
+
+      <div fxFlex="50%">
+        <div>Select Finacial Year</div>
+        <mat-form-field appearance="outline" style="width:100%;">
+          <mat-select placeholder="Select" [(value)]="selectedFnYer" (selectionChange)="onChangeFinancialYear($event)">
+            <mat-option *ngFor="let financial of financialYear; let i = index" [value]="financial.id">
+              {{ financial.name }}</mat-option>
+          </mat-select>
+          <!-- <mat-select [(value)]="selectedFnYer" placeholder="Select Finacial Year">
+            <mat-option value="18">18-19</mat-option>
+            <mat-option value="19">19-20</mat-option>
+            <mat-option value="20">20-21</mat-option>
+          </mat-select>-->
+        </mat-form-field>
+      </div>
+
+      <div fxFlex="5%"> </div>
+      <div fxFlex="45%">
+        <div>Select Invoice Type</div>
+        <mat-button-toggle-group name="fontStyle" aria-label="Font Style" #group="matButtonToggleGroup"
+          [(ngModel)]="billType">
+          <mat-button-toggle value="1">Challan</mat-button-toggle>
+          <mat-button-toggle value="2">Invoice</mat-button-toggle>
+        </mat-button-toggle-group>
+        <!-- <div class="example-selected-value">Selected value: {{group.value}}</div> -->
+
+      </div>
+    </div>
+  </mat-expansion-panel>
+
+ 
+</mat-accordion>
+
+<mat-tab-group [(selectedIndex)]="selectedTab" (selectedTabChange)="tabChanged($event)">
+
+
+  <!-- tab 1 aka Select Item list-->
+  <mat-tab label="Select Item">
+
+
+    <div layout="row" layout-wrap>
+      <div fxFlex="10%"></div>
+      <div fxFlex="80%">
+        <mat-form-field appearance="outline" class="this-feels-better" style="width:100%; margin-top: 16px;">
+          <mat-icon style="float: left; font-size: 30px;">search</mat-icon>&nbsp;&nbsp;
+          <input matInput type="text" placeholder="Brand Name, Product Name, Price" [(ngModel)]="filterText">
+          <button mat-button *ngIf="filterText" matSuffix mat-icon-button aria-label="Clear" (click)="filterText=''">
+            <mat-icon>close</mat-icon>
+          </button>
+        </mat-form-field>
+      </div>
+      <div fxFlex="10%"></div>
+    </div>
+
+
+    <mat-selection-list class="custom-scroll-bar">
+      <div fxLayoutWrap fxLayoutGap="10px">
+
+        <mat-list>
+
+          <mat-list-item
+            *ngFor="let trans of dataSource.data  | productfilter:{ brand_name: filterText, ProName: filterText, SellingPrice: filterText }   let i = index"
+            style="border:1px solid #eee; padding: 10px;
+        box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.2); margin-top:7px;">
+
+
+            <div class="item" fxFlex="25%">
+              <img height="70px;" width="70px;" src="{{trans.ProImage}}" (click)="openCreate(trans.Id)" />
+            </div>
+
+            <div class="item" fxFlex="50%" style="line-height: 1.3;">
+              <!-- <span><b>Name :</b> {{trans.ProName}}</span><br> -->
+              <b style="font-size:25px;">{{trans.ProName}}</b><br> ({{trans.brand_name}})<br>
+              <span><b>Rate : </b>{{trans.SellingPrice}} / Unit</span><br>
+              <span><b>Unit : </b>{{trans.unit}} Pcs</span><br>
+              <span><b>SKU : </b>{{trans.sku_code}}</span><br>
+              <span><b>GST : </b>{{trans.tax}} %</span>
+            </div>
+
+            <div class="item" fxFlex="25%">
+              <div fxFlexFill>
+                <mat-form-field appearance="outline" style="width: 80%; ">
+                  <!--<mat-icon (click)="addItem(i)" id="add">add_circle_outline</mat-icon>-->
+                  <input matInput [(ngModel)]="trans.min_ord_qty" type="number" (blur)="cartQtyUpdate(i,'firstTab')">
+                  <!--<mat-icon fxFlex="15%" (click)="removeItem(i)" id="remove">remove_circle_outline</mat-icon>-->
+                </mat-form-field>
+              </div>
+
+            </div>
+          </mat-list-item>
+        </mat-list>
+      </div>
+    </mat-selection-list>
+  </mat-tab>
+  <!-- ends here 1st tab-->
+
+
+
+  <!-- tab 2 aka cart Item list-->
+  <mat-tab>
+    <ng-template matTabLabel>
+      <span matBadge="{{batchCount}}" matBadgeOverlap="false">My Cart</span>
+    </ng-template>
+    <mat-selection-list class="custom-scroll-bar">
+      <div class="container" fxLayout="row" fxLayout.xs="" fxLayoutWrap fxLayoutGap="0.0%" fxLayoutAlign="">
+        <mat-list>
+
+          <mat-list-item *ngFor="let trans of dataSource.data let i = index" style="border:1px solid #eee; padding: 10px;
+          box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.2); margin-top:7px;">
+
+            <div class="item" fxFlex="25%">
+              <img height="60px;" width="60px;" src="{{trans.ProImage}}" (click)="openCreate(trans.Id)" />
+            </div>
+
+            <div class="item" fxFlex="50%" style="line-height: 1.3;">
+              <b style="font-size:25px;">{{trans.ProName}}</b><br>
+              ({{trans.brand_name}})<br>
+              <span><b>Rate : </b>{{trans.SellingPrice}} / Unit</span><br>
+              <span><b>Unit : </b>{{trans.unit}} Pcs</span><br>
+              <span><b>SKU : </b>{{trans.sku_code}}</span><br>
+              <span><b>GST : </b>{{trans.tax}} %</span>
+            </div>
+            <div class="item" fxFlex="25%">
+              <div fxFlexFill>
+                <mat-form-field appearance="outline" style="width: 80%; ">
+                  <!--<mat-icon (click)="addItem(i)" id="add">add_circle_outline</mat-icon>-->
+                  <input matInput [(ngModel)]="trans.cart_qty" type="number" (blur)="cartQtyUpdate(i,'cart')">
+                  <!--<mat-icon fxFlex="15%" (click)="removeItem(i)" id="remove">remove_circle_outline</mat-icon>-->
+
+                </mat-form-field>
+                <i class="material-icons" (click)="deleteCartItem(i)" style="cursor: pointer;">delete</i>
+              </div>
+
+            </div>
+          </mat-list-item>
+
+
+          <!-- <div class="row" style="border:1px solid #eee; padding: 10px;
+          box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.2); margin-top:7px; 
+          text-align: right;" *ngIf="batchCount!='0'">
+
+          <b style="text-align: left;">Total Price : </b>{{totalCartPrice}} <br>
+          <b style="text-align: left;">SGST Tax : </b>{{totalTax.sgst}} <br>
+          <b style="text-align: left;">CGST Tax : </b>{{totalTax.cgst}} <br>
+          <b style="text-align: left;">IGST Tax : </b>{{totalTax.igst}} <br>
+          <hr>
+          <b style="text-align: left;">Total Paid : </b> {{totalPaidAmnt}} -->
+          <div class="row" style="border:1px solid #eee; padding: 10px;
+          box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.2); margin-top:7px; 
+          text-align: right;" *ngIf="batchCount">
+
+            <div class="item" fxFlex="75%">Total Price : </div>
+            <div class="item" fxFlex="25%">{{totalCartPrice}}</div>
+          </div>
+
+          <div class="row" style="margin-top:7px; text-align: right;" *ngIf="batchCount">
+
+            <div class="item" fxFlex="75%">SGST Tax : </div>
+            <div class="item" fxFlex="25%">{{totalTax.sgst}}</div>
+          </div>
+
+          <div class="row" style="margin-top:7px; text-align: right;" *ngIf="batchCount">
+
+            <div class="item" fxFlex="75%">CGST Tax : </div>
+            <div class="item" fxFlex="25%">{{totalTax.cgst}}</div>
+          </div>
+
+          <div class="row" style="margin-top:7px; text-align: right;" *ngIf="batchCount">
+
+            <div class="item" fxFlex="75%">IGST Tax : </div>
+            <div class="item" fxFlex="25%">{{totalTax.igst}}</div>
+          </div>
+
+          <div class="row" style="border:1px solid #eee; padding: 10px;
+          margin-top:7px; text-align: right;" *ngIf="batchCount">
+
+            <div class="item" fxFlex="75%">Total Paid : </div>
+            <div class="item" fxFlex="25%">{{totalPaidAmnt}}</div>
+          </div>
+          <!-- <div class="item" fxFlex="75%">SGST Tax</div>
+            <div class="item" fxFlex="25%">{{totalTax.sgst}}</div>
+            <div class="item" fxFlex="75%">CGST Tax</div>
+            <div class="item" fxFlex="25%">{{totalTax.cgst}}</div>
+            <div class="item" fxFlex="75%">Total Paid</div>
+            <div class="item" fxFlex="25%">{{totalPaidAmnt}}</div> -->
+
+
+
+
+          <!-- vhoose bill type section-->
+          <form [formGroup]="registerForm" (submit)="templateForm()" style="float:right; width:300px; padding:10px 2px;"
+            *ngIf="batchCount">
+            <div class="row">
+              <div class="item" fxFlex="40%">
+                <!-- <label id="example-radio-group-label">Select Bill Type </label> &nbsp; -->
+              </div>
+
+              <div class="item" fxFlex="60%">
+                <!--<mat-radio-group aria-labelledby="example-radio-group-label" class="example-radio-group"
+                  formControlName="bill">
+                  <mat-radio-button class="tp-radio-button" value="1"> Challan</mat-radio-button> &nbsp;
+                  <mat-radio-button class="tp-radio-button" value="2"> Invoice</mat-radio-button>
+                </mat-radio-group>-->
+              </div>
+            </div>
+
+            <div class="row" style="text-align: center; float: right; " *ngIf="chkOrderStatus===0">
+              <button mat-flat-button color="warn"
+                style="width:200px; margin:10px auto; font-size:16px; right:18px;">Place Order</button>
+            </div>
+          </form>
+
+          <div class="row" style="text-align: center; float: right;" *ngIf="chkOrderStatus===1">
+            <button mat-flat-button color="warn" style="width:200px; margin:10px auto; font-size:16px; right:18px;"
+              (click)="orderUpdate(orderID)">Order Update</button>
+          </div>
+
+        </mat-list>
+      </div>
+    </mat-selection-list>
+  </mat-tab>
+  <!-- ends here 2nd tab-->
+
+
+
+  <!-- tab 3 aka all orders list-->
+  <mat-tab label="All Orders">
+    <mat-selection-list class="custom-scroll-bar">
+      <div class="container" fxLayout="row" fxLayout.xs="" fxLayoutWrap fxLayoutGap="0.0%" fxLayoutAlign="">
+        <mat-list>
+
+          <mat-list-item *ngFor="let inv of invoiceDtl let i = index" style="border:1px solid #eee; padding: 10px;
+                    box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.2); margin-top:7px;">
+
+
+            <div class="item" fxFlex="25%">
+              <!-- <span class="dot"><br>{{inv.quantity}}</span> -->
+              <div class="numberCircle">{{inv.quantity}}</div>
+            </div>
+
+            <div class="item" fxFlex="75%" style="line-height: 1.3;">
+              <span style="font-size:20px;"><b>Order ID : </b>{{inv.orderId}}</span><br>
+              <span style="font-size:20px;"><b>Order Amount : {{inv.price}}</b></span><br>
+              <span>{{inv.orderDate | date: 'dd MMM yyyy'}}</span><br>
+
+
+              <!-- <button mat-raised-button (click)="openOrderList(inv.orderId)" color="warn"
+                  style="margin:10px !important;" (click)="openContentOne(inv.id,'view')">View</button> 
+
+                  <a (click)="openContentOne(inv.id,'edit')" style="margin:10px !important; cursor:pointer;"><mat-icon>create</mat-icon></a>-->
+
+              <button mat-raised-button (click)="openOrderList(inv.orderId)" color="warn"
+                style="margin:10px !important;" (click)="downloadinvoice(inv.id)">View</button>
+
+              <a (click)="openContentOne(inv.id,'view')" style="margin:10px !important; cursor:pointer;">
+                <mat-icon>create</mat-icon>
+              </a>
+              <a (click)="cancelOrder(inv.id)" style="margin:10px !important; cursor:pointer;">
+                <mat-icon>delete</mat-icon>
+              </a>
+              <!--<a (click)="downloadinvoice(inv.id)" style="margin:8px !important; cursor:pointer;"><i class="material-icons">share</i></a>-->
+
+            </div>
+
+            <!--<div class="item" fxFlex="25%">
+                <div fxFlexFill>
+                  <button mat-raised-button (click)="openOrderList(inv.orderId)" color="warn"
+                  style="margin:7px !important;" (click)="generatePdf('download')">View</button>
+
+                   <button mat-raised-button (click)="openContentOne()" style="margin:7px !important;"><mat-icon>create</mat-icon></button> -->
+            <!-- <button mat-raised-button  style="margin:7px !important;" (click)="cancelOrder(inv.id)">
+                    <mat-icon>delete_forever</mat-icon> </button>
+                    <a (click)="openContentOne()"><mat-icon>create</mat-icon></a> |
+                    <a (click)="cancelOrder(inv.id)"><mat-icon>delete</mat-icon></a>
+                  
+                </div>
+
+              </div>-->
+
+            <!--<div>
+               <pdf-viewer [src]="pdfSrc"  [original-size]="false"></pdf-viewer>
+            </div> -->
+          </mat-list-item>
+        </mat-list>
+      </div>
+    </mat-selection-list>
+  </mat-tab>
+  <!-- ends here tab3-->
+
+</mat-tab-group>

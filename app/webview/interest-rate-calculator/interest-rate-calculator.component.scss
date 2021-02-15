@@ -1,0 +1,37 @@
+.tp-h2 {
+    margin: 10px;
+ }
+ .tp-messagebox {
+   margin: 10px 10px;
+   padding: 10px;
+   border-radius: 3px;
+   border: solid 1px black;
+   font-size: 14px;
+   display: flex;
+   text-align: justify;
+}
+ .tp-section {
+    display: flex;
+    align-content: center;
+    align-items: center;
+    height: 60px;
+   
+ }
+ .tp-margin {
+    margin: 0 10px;
+ }
+ .tp-radio-group {
+    display: inline-flex;
+    flex-direction: column;
+ }
+ .tp-radio-button {
+    margin: 5px;
+ }
+ .tp-selected-value {
+    margin: 15px 0;
+ }
+
+ .paynow-btn {
+  text-align: center;
+  margin-top: 10px;
+ }

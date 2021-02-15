@@ -1,0 +1,210 @@
+<div class="example-container">
+
+
+  <div fxFlex  fxLayout="row" fxLayout.lt-lg="column" >
+     <div fxFlexFill>
+      <!--
+        <mat-select class="form-control" name="countryid" id="countryid" placeholder="Select Country" [(value)]="selectedCountries"  multiple >
+             <mat-option *ngFor="let country of countryList" [value]="country.id">{{country.name}}</mat-option>
+           </mat-select>
+        </mat-form-field>  &nbsp; &nbsp;
+
+        <mat-form-field style="width: 22%;">
+           <mat-select class="form-control" name="states" id="states" placeholder="Select States" [(value)]="selectedStates"  multiple >
+             <mat-option *ngFor="let state of states" [value]="state.id">{{state.name}}</mat-option>   
+           </mat-select>
+        </mat-form-field> &nbsp; &nbsp; -->
+
+         <mat-form-field style="width: 22%;">
+           <mat-select class="form-control" name="usertypes" id="usertypes" placeholder="Select User Types"  [(value)]="selectedUserType" multiple >
+             <mat-option *ngFor="let usertype of usertypes" [value]="usertype.id">{{usertype.userType}}</mat-option>
+           </mat-select>
+         </mat-form-field> &nbsp; &nbsp;
+
+         <mat-form-field style="width: 22%;">
+           <mat-select class="form-control" name="userstatus" id="userstatus" [(value)]="ActiveInactiveList" placeholder="User Status"  >
+             <mat-option  value="0">Inactive Users</mat-option>
+             <mat-option  value="1">Active Users</mat-option>
+           </mat-select>
+         </mat-form-field> &nbsp; &nbsp;
+
+         <mat-form-field style="width: 22%;">
+          <mat-select class="form-control" name="AppversionId" id="AppversionId" placeholder="Select App Version" [(value)]="selectedAppVersions"  multiple >
+            <mat-option *ngFor="let AppVersion of VersionTypesList" [value]="AppVersion.app_version">{{AppVersion.app_version}}</mat-option>
+          </mat-select>
+        </mat-form-field>  &nbsp; &nbsp;
+
+     </div>
+ </div>
+ <div fxFlex  fxLayout="row" fxLayout.lt-lg="column" >
+    <div fxFlexFill>
+      
+      
+      
+      <mat-form-field style="width: 22%;">
+        <mat-label>Joining Date From</mat-label>
+        <input matInput type="date" id="joiningdatefrom" name="datefrom" />
+      </mat-form-field> &nbsp; &nbsp;
+      <mat-form-field style="width: 22%;">
+        <mat-label>Joining Date To</mat-label>
+        <input matInput type="date" id="joiningdateto" name="dateto" />
+      </mat-form-field> &nbsp; &nbsp;
+
+      <!--
+        <mat-select-autocomplete
+          [placeholder]="'Select Options'"
+          [(value)]="selectedNewOption"
+          [options]="options"
+          [multiple]='true'
+          name="optionsSelector"
+          id="optionsSelector"
+          [formControl]="profileForm.controls['selected']">
+        </mat-select-autocomplete> -->
+    
+
+    </div>
+    
+    
+
+
+  </div>
+
+
+ 
+ <br />
+ <div fxFlex  fxLayout="row" fxLayout.lt-lg="column" >
+   <div fxFlexFill>
+    
+     <!-- <mat-form-field style="width: 22%;"> -->
+      <button mat-raised-button  color="primary" class="w-100" (click)="filterDetails()">Filter Data</button> 
+    <!-- </mat-form-field>  -->
+   
+   </div>
+ </div>
+
+
+
+
+</div>
+
+
+
+
+
+<div class="mb-20" flFlex flexLayout="row" flexLayout.lt-md="column">
+<div fxFlex>
+ 
+    <mat-form-field>
+      <input matInput placeholder="filter" (keyup)="applyFilter($event.target.value)">
+     
+    </mat-form-field> &nbsp;&nbsp; &nbsp;&nbsp; Total Users - {{TotalUsers}}
+    
+      <button mat-raised-button style="float: right; margin:0px 5px;"  color="primary" class="w-100" (click)="UpdateISDCode()">Update ISD Code</button> 
+      
+      
+      <button mat-raised-button style="float: right;"  color="primary" class="w-100" (click)="UpdateExtractedAddress()">Extract Address</button> 
+
+    <table cellpadding="10" style="width:100%; font-size: 10px;" mat-table  [dataSource]="dataSource" matSort class="mat-elevation-z8">
+           <ng-container matColumnDef="Sn">
+               <th mat-header-cell  *matHeaderCellDef mat-sort-header> Sn. </th>
+               <!--<td mat-cell *matCellDef="let element"> {{element.id}} </td>-->
+               <td mat-cell *matCellDef="let element; let i = index;"> {{i+1}} </td>
+           </ng-container>
+           <ng-container matColumnDef="id" >
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> UserId </th>
+            <td mat-cell *matCellDef="let element" >{{element.id}} </td>
+         </ng-container>
+          <ng-container matColumnDef="isd_code" >
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> ISD Code </th>
+            <td style="font-size: 12px;" mat-cell *matCellDef="let element" >{{element.isd_code}} <br> {{element.country_name}}</td>
+         </ng-container>
+
+          <ng-container matColumnDef="person_name" >
+             <th mat-header-cell *matHeaderCellDef mat-sort-header> User Name </th>
+             <td style="font-size: 12px; width:100px;" mat-cell *matCellDef="let element" >{{element.person_name}} </td>
+          </ng-container>
+           <ng-container matColumnDef="mobile">
+               <th mat-header-cell *matHeaderCellDef mat-sort-header> Mobile </th>
+               <td style="font-size: 12px;" mat-cell *matCellDef="let element"> {{element.mobile}} </td>
+           </ng-container>
+
+           <ng-container matColumnDef="email">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Email </th>
+            <td style="font-size: 12px;" mat-cell *matCellDef="let element"> {{element.email}} </td>
+           </ng-container>
+           
+           <ng-container matColumnDef="m_user_type_id">
+               <th mat-header-cell *matHeaderCellDef mat-sort-header> UserTypes </th>
+               <td style="font-size: 12px;width:60px;" mat-cell *matCellDef="let element"> {{element.m_user_type_id}} </td>
+           </ng-container>
+           
+           <ng-container matColumnDef="app_version">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> App Version </th>
+            <td style="font-size: 12px;width:60px;" mat-cell *matCellDef="let element"> {{element.app_version}} </td>
+          </ng-container>
+           <ng-container matColumnDef="is_verified">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Is Verified </th>
+            <td style="font-size: 12px;width:60px;" mat-cell *matCellDef="let element"> {{element.is_verified}} </td>
+          </ng-container>
+          
+           <ng-container matColumnDef="language">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Lang </th>
+            <td style="font-size: 12px;width:60px;" mat-cell *matCellDef="let element"> {{element.language}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="timezone">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> TimeZone </th>
+            <td mat-cell *matCellDef="let element"> {{element.timezone}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="extracted_address">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Extracted Address </th>
+            <td style="font-size: 12px;" mat-cell *matCellDef="let element"> {{element.extracted_address}} </td>
+          </ng-container>
+
+          
+           <ng-container matColumnDef="joined_on">
+               <th mat-header-cell *matHeaderCellDef mat-sort-header> Joined Date </th>
+               <td style="font-size: 12px;" mat-cell *matCellDef="let element"> {{element.joined_on}} </td>
+           </ng-container>
+           
+            <ng-container matColumnDef="last_active_on">
+             <th mat-header-cell *matHeaderCellDef mat-sort-header> Last Active On </th>
+             <td style="font-size: 12px;" mat-cell *matCellDef="let element">  {{element.last_active_on}}</td>
+            </ng-container>
+            
+            <ng-container matColumnDef="reffered_by">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> Referred By </th>
+              <td style="font-size: 12px;" mat-cell *matCellDef="let element">  {{element.reffered_by}}
+              </td>
+             </ng-container>
+             
+             <ng-container matColumnDef="TotalReferred">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> Total Referred </th>
+              <td style="font-size: 12px;" mat-cell *matCellDef="let element">  {{element.TotalReferred}}
+              </td>
+             </ng-container>
+           <!-- Action Column -->
+           <ng-container matColumnDef="action">
+                 <th mat-header-cell *matHeaderCellDef> Action </th>
+                 <td mat-cell *matCellDef="let element" class="action-link"> 
+                         <!-- <button mat-icon-button color="warn" (click)="deleteBrand(element)">
+                               <mat-icon>delete_forever</mat-icon>
+                         </button> -->
+                 <!-- <a (click)="deleteBrand(element.id)"><mat-icon>delete</mat-icon></a>   -->
+                 </td>
+           </ng-container>
+ 
+           <tr mat-header-row *matHeaderRowDef="displayedColumnsBroadcasts"></tr>
+           <tr mat-row *matRowDef="let row; columns: displayedColumnsBroadcasts;"></tr>
+
+           
+       </table>
+       <div class="example-loading-shade" *ngIf="isLoadingResults">
+           <mat-spinner *ngIf="isLoadingResults"></mat-spinner>
+       </div>
+       
+      
+       <mat-paginator [pageSizeOptions]="[100,150,200]" showFirstLastButtons></mat-paginator>
+</div>
+</div>

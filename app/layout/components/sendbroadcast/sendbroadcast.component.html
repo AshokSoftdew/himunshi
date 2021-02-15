@@ -1,0 +1,189 @@
+
+<div class="example-container">
+     <div fxFlex  fxLayout="row" fxLayout.lt-lg="column" >
+        <div fxFlexFill>
+          <!--
+            <mat-form-field style="width: 22%;">
+              <mat-select class="form-control" name="countryid" id="countryid" placeholder="Select Country" [(value)]="selectedCountries"  multiple >
+                <mat-option *ngFor="let country of countryList" [value]="country.id">{{country.name}}</mat-option>
+            </mat-form-field>  &nbsp; &nbsp;
+          --> 
+            <!-- <mat-form-field style="width: 22%;">
+              <mat-select class="form-control" name="states" id="states" placeholder="Select States" [(value)]="selectedStates"  multiple >
+                <mat-option *ngFor="let state of states" [value]="state.id">{{state.name}}</mat-option>   
+              </mat-select>
+            </mat-form-field> &nbsp; &nbsp; -->
+
+            <mat-form-field style="width: 22%;">
+              <mat-select class="form-control" name="notificationTypeid" id="notificationTypeid" placeholder="Select Notification Type" [(ngModel)]="selectedNotificationTypeList">
+                <mat-option *ngFor="let notificationType of NotificationTypeList" [value]="notificationType.id">{{notificationType.type}}</mat-option>
+              </mat-select>
+            </mat-form-field>  &nbsp; &nbsp;
+    
+    
+            <mat-form-field style="width: 22%;">
+              <mat-select class="form-control" name="showtouser" id="showtouser" [(value)]="ShowtoUserList" placeholder="Show to User / Silent"  >
+                <mat-option  value="1">Show to Users</mat-option>
+                <mat-option  value="0">Silent</mat-option>
+              </mat-select>
+            </mat-form-field> &nbsp; &nbsp;
+
+            <mat-form-field style="width: 22%;">
+              <mat-select class="form-control" name="usertypes" id="usertypes" placeholder="Select User Types"  [(value)]="selectedUserType" multiple >
+                <mat-option *ngFor="let usertype of usertypes" [value]="usertype.id">{{usertype.userType}}</mat-option>
+              </mat-select>
+            </mat-form-field> &nbsp; &nbsp;
+
+            <mat-form-field style="width: 22%;">
+              <mat-select class="form-control" name="userstatus" id="userstatus" [(value)]="ActiveInactiveList" placeholder="User Status"  >
+                <mat-option  value="0">Inactive Users</mat-option>
+                <mat-option  value="1">Active Users</mat-option>
+              </mat-select>
+            </mat-form-field> &nbsp; &nbsp;
+
+        </div>
+    </div>
+    <div fxFlex  fxLayout="row" fxLayout.lt-lg="column" >
+      <div fxFlexFill>
+        <mat-form-field style="width: 22%;">
+          <mat-select class="form-control" name="AppversionId" id="AppversionId" placeholder="Select App Version" [(value)]="selectedAppVersions"  multiple >
+            <mat-option *ngFor="let AppVersion of VersionTypesList" [value]="AppVersion.app_version">{{AppVersion.app_version}}</mat-option>
+          </mat-select>
+        </mat-form-field>  &nbsp; &nbsp;
+        <mat-form-field style="width: 22%;">
+          <mat-label>Joining Date From</mat-label>
+          <input matInput type="date" id="joiningdatefrom" name="datefrom" />
+        </mat-form-field> &nbsp; &nbsp;
+        <mat-form-field style="width: 22%;">
+          <mat-label>Joining Date To</mat-label>
+          <input matInput type="date" id="joiningdateto" name="dateto" />
+       </mat-form-field> &nbsp; &nbsp;
+        <!-- <mat-form-field style="width: 22%;"> -->
+        <!-- </mat-form-field> &nbsp; &nbsp;
+        <mat-form-field style="width: 22%;"> -->
+        <!-- </mat-form-field> &nbsp; &nbsp; -->
+      </div>
+    </div>
+    <div fxFlex  fxLayout="row" fxLayout.lt-lg="column" >
+      <div fxFlexFill>
+         
+
+          <mat-form-field style="width: 22%;">
+            <textarea matInput placeholder = "Boradcast Title" id="title"></textarea>
+          </mat-form-field> &nbsp; &nbsp;
+
+          <mat-form-field  style="width: 22%;">
+            <textarea matInput placeholder = "Boradcast message here" id="broadcastMsg"></textarea>
+          </mat-form-field> &nbsp; &nbsp;
+
+          <input  type="file" id="fcmimage" name="fcmimage" />
+      </div>
+    </div>
+    
+    <div fxFlex  fxLayout="row" fxLayout.lt-lg="column"  >
+      <div fxFlexFill>
+        <mat-form-field style="width: 100%;">
+            <input matInput  type="text" id="url_link" name="url_link" placeholder = "Enter URL Link"   />
+        </mat-form-field> 
+      </div>
+    </div>
+    <div fxFlex  fxLayout="row" fxLayout.lt-lg="column" >
+      <div fxFlexFill>
+        <br />
+        <!-- <mat-form-field style="width: 22%;"> -->
+          <button mat-raised-button  color="primary" class="w-100" (click)="saveDetails()">Save</button>
+        <!-- </mat-form-field>   -->
+      
+      </div>
+    </div>
+</div>
+
+
+
+
+
+
+<div class="mb-20" flFlex flexLayout="row" flexLayout.lt-md="column">
+  <div fxFlex>
+        <mat-form-field>
+            <input matInput placeholder="filter" (keyup)="applyFilter($event.target.value)">
+        </mat-form-field> 
+        <table style="font-size: 12px;" mat-table  [dataSource]="dataSource" matSort class="mat-elevation-z8" >
+              <ng-container matColumnDef="Sn">
+                  <th mat-header-cell  *matHeaderCellDef mat-sort-header> Sn. </th>
+                  <!--<td mat-cell *matCellDef="let element"> {{element.id}} </td>-->
+                  <td mat-cell *matCellDef="let element; let i = index;"> {{i+1}} </td>
+              </ng-container>
+ 
+              <ng-container matColumnDef="img" >
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Image </th>
+                <td mat-cell *matCellDef="let element">  
+                  <img mat-card-image width="80" height="80" [src]="element.image ? element.image : NoImage">
+                </td>
+                       
+                <!-- <img onError="this.src='../app/assets/images/no-image.png'" width="80" height="80" src="{{element.image}}"> -->
+              </ng-container>
+            
+              <ng-container matColumnDef="title">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Title </th>
+                <td mat-cell *matCellDef="let element"> {{element.title}} </td>
+             </ng-container> 
+               
+              <ng-container matColumnDef="message">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header> Message </th>
+                  <td mat-cell *matCellDef="let element"> {{element.message}}<br /><br /> <span style="font-size: 10px;"> {{element.query_string}} </span></td>
+              </ng-container>
+
+              <ng-container matColumnDef="ShowNitificationToUser">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Show Notification To User </th>
+                <td style="text-align: center;" mat-cell *matCellDef="let element"> {{element.ShowNitificationToUser}}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="notification_type">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> Notification Type </th>
+              <td style="text-align: center;" mat-cell *matCellDef="let element"> {{element.notification_type}}</td>
+          </ng-container>
+ 
+              <ng-container matColumnDef="datetime">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Created On </th>
+                <td mat-cell *matCellDef="let element"> {{element.datetime}} </td>
+              </ng-container>
+              
+              <ng-container matColumnDef="send">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Send BroadCast </th>
+                <td style="text-align: center;" mat-cell *matCellDef="let element">
+                  <button mat-icon-button color="warn" (click)="sendBroadCast(element.id)">
+                      Send 
+                  </button> 
+                </td>
+            </ng-container>
+    
+              <!-- Action Column -->
+              <ng-container matColumnDef="action">
+                    <th mat-header-cell *matHeaderCellDef> Action </th>
+                    <td mat-cell *matCellDef="let element" class="action-link"> 
+                            <button mat-icon-button color="warn" (click)="deleteBrand(element)">
+                                  <mat-icon>delete_forever</mat-icon>
+                            </button>
+                    <!-- <a (click)="deleteBrand(element.id)"><mat-icon>delete</mat-icon></a>   -->
+                    </td>
+              </ng-container>
+              <ng-container matColumnDef="response">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Total Sent</th>
+                <td mat-cell *matCellDef="let element"> {{element.response}} </td>
+              </ng-container>
+              
+    
+              <tr mat-header-row *matHeaderRowDef="displayedColumnsBroadcasts"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumnsBroadcasts;"></tr>
+
+              
+          </table>
+          <div class="example-loading-shade" *ngIf="isLoadingResults">
+              <mat-spinner *ngIf="isLoadingResults"></mat-spinner>
+          </div>
+          
+          <!--<mat-paginator #paginator [length]="length" [pageIndex]="0" [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>-->
+          <mat-paginator [pageSizeOptions]="[15,30,50]" showFirstLastButtons></mat-paginator>
+  </div>
+</div>

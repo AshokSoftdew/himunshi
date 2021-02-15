@@ -1,0 +1,238 @@
+<mat-dialog-content>
+  <button class="mat-raised-button"(click)="close()" style="float:right;">Close</button>
+  <input type="hidden" value="{{ data.userid }}" id="userId">
+  <h2 mat-dialog-title>{{ data.action }}</h2>
+  <div class="container">
+    <form [formGroup]="popForm" novalidate (ngSubmit)="onSubmit()">
+      <input type="hidden" value="{{ data.productId }}" id="productId">
+      <div fxLayout="row" fxLayoutAlign="start center" class="content">
+        <div fxFlex>
+          <div fxFlex="100%">
+            <input type="file" name="productImg" (change)="onFileSelect($event)" />
+          </div>
+        </div>
+      </div>
+
+      <div fxLayout="row" fxLayoutAlign="start center">
+        <div fxFlex>
+          <div fxFlex="45%">
+            <mat-form-field class="example-full-width">
+              <input MatFormFieldControl formControlName="productName" matInput placeholder="Product Name">
+              <mat-error
+                *ngIf="!!popForm.controls.productName.errors?.required && !!popForm.controls.productName.touched">
+                Product Name is required</mat-error>
+            </mat-form-field>
+          </div>
+
+          <div fxFlex="5%"></div>
+
+          <div fxFlex="45%">
+            <mat-form-field class="example-full-width">
+              <input MatFormFieldControl formControlName="skuCode" matInput placeholder="SKU Code">
+              <mat-error *ngIf="!!popForm.controls.skuCode.errors?.required && !!popForm.controls.skuCode.touched">
+                Sku Code  is required</mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+
+      <div fxLayout="row" fxLayoutAlign="start center">
+        <div fxFlex>
+          <div fxFlex="45%">
+            <mat-form-field class="example-full-width">
+              <input MatFormFieldControl formControlName="tax" matInput placeholder="Tax(%)">
+              <mat-error
+                *ngIf="!!popForm.controls.tax.errors?.required && !!popForm.controls.tax.touched">
+                Tax is required</mat-error>
+            </mat-form-field>
+          </div>
+
+          <div fxFlex="5%"></div>
+
+          <div fxFlex="45%">
+            <mat-form-field class="example-full-width">
+              <input MatFormFieldControl formControlName="hsnCode" matInput placeholder="HSN Code">
+              <mat-error *ngIf="!!popForm.controls.hsnCode.errors?.required && !!popForm.controls.hsnCode.touched">
+                HSN Code is required</mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+
+      <div fxLayout="row" fxLayoutAlign="start center">
+          <div fxFlex>
+            <div fxFlex="45%">
+              <mat-form-field class="example-full-width">
+                <mat-select MatFormFieldControl formControlName="brandName" placeholder="Brand"
+                  (selectionChange)="getCategoryByBrand($event, '')">
+                  <mat-option *ngFor="let brand of brands; let i = index" [value]="brand.id">{{ brand.brand_name }}
+                  </mat-option>
+                </mat-select>
+                <mat-error
+                  *ngIf="!!popForm.controls.brandName.errors?.required && !!popForm.controls.brandName.touched">Brand
+                  Name is required</mat-error>
+              </mat-form-field>
+            </div>
+            <div fxFlex="5%"></div>
+
+            <div fxFlex="45%">
+              <mat-form-field class="example-full-width">
+                <mat-select MatFormFieldControl formControlName="categoryName" placeholder="Category"
+                  name="categoryName">
+                  <mat-option *ngFor="let category of categories; let i = index" [value]="category.id">
+                    {{ category.category_name }}</mat-option>
+                </mat-select>
+                <mat-error
+                  *ngIf="!!popForm.controls.categoryName.errors?.required && !!popForm.controls.categoryName.touched">
+                  Category Name is required</mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+      </div>
+
+      <div fxLayout="row" fxLayoutAlign="start center" class="content">
+        <div fxFlex>
+          <div fxFlex="45%">
+            <mat-form-field class="example-full-width">
+              <input MatFormFieldControl formControlName="sellingPriceToRetailer" matInput placeholder="My Unit Selling Price">
+              <mat-error
+                *ngIf="!!popForm.controls.sellingPriceToRetailer.errors?.required && !!popForm.controls.sellingPriceToRetailer.touched">
+                Selling Price to Retailer is required</mat-error>
+            </mat-form-field>
+          </div>
+
+          <div fxFlex="5%"></div>
+
+          <div fxFlex="45%">
+            <mat-form-field class="example-full-width">
+              <input MatFormFieldControl formControlName="additionalDiscount" matInput placeholder="Extra Discount">
+              <mat-error
+                *ngIf="!!popForm.controls.additionalDiscount.errors?.required && !!popForm.controls.additionalDiscount.touched">
+                Additional Discount is required</mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+
+      <div fxLayout="row" fxLayoutAlign="start center" class="content">
+          <div fxFlex>
+            <div fxFlex="45%">
+              <mat-form-field class="example-full-width">
+              <input MatFormFieldControl formControlName="selectUnits" matInput placeholder="Add Unit">
+              <mat-error
+                *ngIf="!!popForm.controls.selectUnits.errors?.required && !!popForm.controls.selectUnits.touched">
+                Unit is required
+              </mat-error>
+                <!-- <mat-select MatFormFieldControl formControlName="selectUnits" placeholder="Units">
+                  <mat-option *ngFor="let unit of units; let i = index" [value]="unit.id">{{ unit.text }}</mat-option>
+                </mat-select>
+                <mat-error
+                  *ngIf="!!popForm.controls.selectUnits.errors?.required && !!popForm.controls.selectUnits.touched">
+                  Units is required</mat-error> -->
+              </mat-form-field>
+            </div>
+            <div fxFlex="5%"></div>
+
+            <div fxFlex="45%">
+              <mat-form-field class="example-full-width">
+                <input MatFormFieldControl formControlName="subUnits" matInput placeholder="Add Sub-Unit">
+              <mat-error
+                *ngIf="!!popForm.controls.subUnits.errors?.required && !!popForm.controls.subUnits.touched">
+                Sub-Unit is required
+              </mat-error>
+                <!-- <mat-select MatFormFieldControl formControlName="subUnits" placeholder="Sub Unit">
+                  <mat-option *ngFor="let unit of units; let i = index" [value]="unit.text">{{ unit.text }}</mat-option>
+                </mat-select>
+                <mat-error *ngIf="!!popForm.controls.subUnits.errors?.required && !!popForm.controls.subUnits.touched">
+                  Sub Units is required</mat-error> -->
+              </mat-form-field>
+            </div>
+        </div>
+      </div>
+
+      <div fxLayout="row" fxLayoutAlign="start center" class="content">
+        <div fxFlex>
+          <div fxFlex="45%">
+            <mat-form-field class="example-full-width">
+              <input MatFormFieldControl formControlName="purchasePrice" matInput placeholder="My Unit Purchase Price">
+              <mat-error
+                *ngIf="!!popForm.controls.purchasePrice.errors?.required && !!popForm.controls.purchasePrice.touched">
+                Product Price is required</mat-error>
+            </mat-form-field>
+          </div>
+          <div fxFlex="5%"></div>
+          <div fxFlex="45%">
+            <mat-form-field class="example-full-width">
+              <input MatFormFieldControl formControlName="minOrderQty" matInput placeholder="Min. Order Qty">
+              <mat-error
+                *ngIf="!!popForm.controls.minOrderQty.errors?.required && !!popForm.controls.minOrderQty.touched">
+                MinOrderQty is required</mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+
+      <div fxLayout="row" fxLayoutAlign="start center" class="content">
+        <!-- <div class="blocks"> 
+           <div fxFlex> -->
+        <div fxFlex="100%">
+          <mat-form-field>
+            <textarea MatFormFieldControl matInput formControlName="productDescription"
+              placeholder="Description"></textarea>
+          </mat-form-field>
+          <mat-error
+            *ngIf="!!popForm.controls.productDescription.errors?.required && !!popForm.controls.productDescription.touched">
+            Product Description is required</mat-error>
+
+        </div>
+        <!-- </div> 
+      </div> -->
+      </div>
+
+      <div fxLayout="row" fxLayoutAlign="start center" class="content">
+        <div fxFlex>
+          <div fxFlex="45%">
+            Promotion Scheme (if any)
+            <mat-checkbox formControlName="productClearence">Is Clearence Sale!</mat-checkbox>
+          </div>
+
+          <div fxFlex="5%"></div>
+
+          <div fxFlex="45%">
+            <mat-form-field class="example-full-width">
+              <textarea MatFormFieldControl matInput formControlName="promotionalText"
+              placeholder="PromotionalText"></textarea>
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+
+      <div fxLayout="row" fxLayoutAlign="start center" class="content">
+        <div class="blocks">
+          <div fxFlex>
+            <div fxFlex="20%">
+              <button color="primary" [disabled]="!popForm.valid" mat-raised-button>Save</button>
+            </div>
+            <div fxFlex="60%"></div>
+            <div fxFlex="20%" style="float:right;">
+              <button class="mat-raised-button"(click)="close()">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+
+
+      <br />
+
+
+
+
+    </form>
+
+  </div>
+
+
+
+</mat-dialog-content>

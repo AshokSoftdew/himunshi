@@ -1,0 +1,234 @@
+<mat-dialog-content>
+  <button class="mat-raised-button"(click)="close()" style="float:right;">Close</button>
+  <h2 mat-dialog-title>{{ data.action }}</h2>
+  <div class="container">
+    <form [formGroup]="popFormEdit" novalidate (ngSubmit)="onSubmit()">
+      <input type="hidden" value="{{ data.productId }}" id="productId">
+      <input type="hidden" value="{{ data.userid }}" id="userId">
+      <div fxLayout="row" fxLayoutAlign="start center" class="content">
+        <div fxFlex>
+          <div fxFlex="100%">
+            <input type="file" name="productImg"  (change)="onFileSelect($event)"/>
+            <!-- <mat-icon >file_upload</mat-icon> -->
+          </div>
+        </div>
+      </div>
+      <div fxLayout="row" fxLayoutAlign="start center" class="content">
+        <div fxFlex>
+          <div fxFlex="45%">
+            <mat-form-field class="example-full-width">
+              <input formControlName="productName" matInput placeholder="productName">
+              <mat-error
+                *ngIf="!!popFormEdit.controls.productName.errors?.required && !!popFormEdit.controls.productName.touched">
+                Product Name is required</mat-error>
+            </mat-form-field>
+          </div>
+
+          <div fxFlex="5%"></div>
+
+          <div fxFlex="45%">
+            <mat-form-field class="example-full-width">
+              <input MatFormFieldControl formControlName="skuCode" matInput placeholder="skuCode">
+              <mat-error
+                *ngIf="!!popFormEdit.controls.skuCode.errors?.required && !!popFormEdit.controls.skuCode.touched">
+                Sku Code is required</mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+
+
+      <div fxLayout="row" fxLayoutAlign="start center" class="content">
+        <div fxFlex>
+          <div fxFlex="45%">
+            <mat-form-field class="example-full-width">
+              <input MatFormFieldControl formControlName="tax" matInput placeholder="Tax(%)">
+              <mat-error
+                *ngIf="!!popFormEdit.controls.tax.errors?.required && !!popFormEdit.controls.tax.touched">
+                Tax is required</mat-error>
+            </mat-form-field>
+          </div>
+
+          <div fxFlex="5%"></div>
+
+          <div fxFlex="45%">
+            <mat-form-field class="example-full-width">
+              <input MatFormFieldControl formControlName="hsnCode"  matInput placeholder="HSN Code">
+              <mat-error *ngIf="!!popFormEdit.controls.hsnCode.errors?.required && !!popFormEdit.controls.hsnCode.touched">
+                HSN Code is required</mat-error>
+            </mat-form-field> 
+          </div>
+        </div>
+      </div>
+
+      <div fxLayout="row" fxLayoutAlign="start center" class="content">
+          <div fxFlex>
+            <div fxFlex="45%">
+              <mat-form-field class="example-full-width">
+                <mat-select formControlName="brandName" placeholder="Brand"
+                  (selectionChange)="getCategoryByBrand($event, '')">
+                  <mat-option *ngFor="let brand of brands; let i = index" [value]="brand.id">{{ brand.brand_name }}
+                  </mat-option>
+                </mat-select>
+                <mat-error
+                  *ngIf="!!popFormEdit.controls.brandName.errors?.required && !!popFormEdit.controls.brandName.touched">
+                  Brand Name is required</mat-error>
+              </mat-form-field>
+            </div>
+            <div fxFlex="5%"></div>
+
+            <div fxFlex="45%">
+              <mat-form-field class="example-full-width">
+                <mat-select formControlName="categoryName" placeholder="Category" name="categoryName">
+                  <mat-option *ngFor="let category of categories; let i = index" [value]="category.id">
+                    {{ category.category_name }}</mat-option>
+                </mat-select>
+                <mat-error
+                  *ngIf="!!popFormEdit.controls.categoryName.errors?.required && !!popFormEdit.controls.categoryName.touched">
+                  Category Name is required</mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+      </div>
+
+      <div fxLayout="row" fxLayoutAlign="start center" class="content">
+        <div fxFlex>
+          <div fxFlex="45%">
+            <mat-form-field class="example-full-width">
+              <input MatFormFieldControl formControlName="sellingPriceToRetailer" matInput
+                placeholder="My Unit Selling Price">
+              <mat-error
+                *ngIf="!!popFormEdit.controls.sellingPriceToRetailer.errors?.required && !!popFormEdit.controls.sellingPriceToRetailer.touched">
+                Selling Price to Retailer is required</mat-error>
+            </mat-form-field>
+          </div>
+
+          <div fxFlex="5%"></div>
+
+          <div fxFlex="45%">
+            <mat-form-field class="example-full-width">
+              <input MatFormFieldControl formControlName="additionalDiscount" matInput
+                placeholder="additional discount">
+              <mat-error
+                *ngIf="!!popFormEdit.controls.additionalDiscount.errors?.required && !!popFormEdit.controls.additionalDiscount.touched">
+                Additional Discount is required</mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+
+      <div fxLayout="row" fxLayoutAlign="start center" class="content">
+          <div fxFlex>
+            <div fxFlex="45%">
+              <mat-form-field class="example-full-width">
+                <input MatFormFieldControl formControlName="selectUnits" matInput placeholder="Add Unit">
+              <mat-error
+                *ngIf="!!popFormEdit.controls.selectUnits.errors?.required && !!popFormEdit.controls.selectUnits.touched">
+                Unit is required
+              </mat-error>
+                <!-- <mat-select formControlName="selectUnits" placeholder="Units">
+                  <mat-option *ngFor="let unit of units; let i = index" [value]="unit.id">{{ unit.text }}</mat-option>
+                </mat-select>
+                <mat-error
+                  *ngIf="!!popFormEdit.controls.selectUnits.errors?.required && !!popFormEdit.controls.selectUnits.touched">
+                  Units is required</mat-error> -->
+              </mat-form-field>
+            </div>
+            <div fxFlex="5%"></div>
+            <div fxFlex="45%">
+              <mat-form-field class="example-full-width">
+              <input MatFormFieldControl formControlName="subUnits" matInput placeholder="Add Sub-Unit">
+              <mat-error
+                *ngIf="!!popFormEdit.controls.subUnits.errors?.required && !!popFormEdit.controls.subUnits.touched">
+                Sub-Unit is required
+              </mat-error>
+
+                <!-- <mat-select formControlName="subUnits" placeholder="Sub Unit">
+                  <mat-option *ngFor="let unit of units; let i = index" [value]="unit.text">{{ unit.text }}</mat-option>
+                </mat-select>
+                <mat-error
+                  *ngIf="!!popFormEdit.controls.subUnits.errors?.required && !!popFormEdit.controls.subUnits.touched">
+                  Sub Units is required</mat-error> -->
+              </mat-form-field>
+            </div>
+          </div>
+      </div>
+
+      <div fxLayout="row" fxLayoutAlign="start center" class="content">
+        <div fxFlex>
+          <div fxFlex="45%">
+            <mat-form-field class="example-full-width">
+              <input formControlName="purchasePrice" matInput placeholder="My Unit Purchase Price">
+              <mat-error
+                *ngIf="!!popFormEdit.controls.purchasePrice.errors?.required && !!popFormEdit.controls.purchasePrice.touched">
+                Product Price is required</mat-error>
+            </mat-form-field>
+          </div>
+          <div fxFlex="5%"></div>
+
+          <div fxFlex="45%">
+            <mat-form-field  class="example-full-width">
+              <input formControlName="minOrderQty" matInput placeholder="Min Order Qty">
+              <mat-error
+                *ngIf="!!popFormEdit.controls.minOrderQty.errors?.required && !!popFormEdit.controls.minOrderQty.touched">
+                MinOrderQty is required</mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+
+      <div fxLayout="row" fxLayoutAlign="start center" class="content">
+        <div class="blocks">
+          <div fxFlex>
+            <div fxFlex="100%">
+              <mat-form-field>
+                <textarea matInput formControlName="productDescription" placeholder="Description"></textarea>
+              </mat-form-field>
+              <mat-error
+                *ngIf="!!popFormEdit.controls.productDescription.errors?.required && !!popFormEdit.controls.productDescription.touched">
+                Product Description is required</mat-error>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div fxLayout="row" fxLayoutAlign="start center" class="content">
+        <div fxFlex>
+          <div fxFlex="45%">
+            Promotion Scheme (if any)
+            <mat-checkbox formControlName="productClearence">Is Clearence Sale!</mat-checkbox>
+          </div>
+
+          <div fxFlex="5%"></div>
+
+          <div fxFlex="45%">
+            <mat-form-field class="example-full-width">
+              <textarea MatFormFieldControl matInput formControlName="promotionalText"
+              placeholder="PromotionalText"></textarea>
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+
+      <div fxLayout="row" fxLayoutAlign="start center" class="content">
+        <div class="blocks">
+          <div fxFlex>
+            <div fxFlex="20%">
+              <button color="primary" [disabled]="!popFormEdit.valid" mat-raised-button>Save</button>
+            </div>
+            <div fxFlex="60%"></div>
+            <div fxFlex="20%" style="float:right;">
+              <button class="mat-raised-button"(click)="close()">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <br />
+    </form>
+
+  </div>
+
+
+
+</mat-dialog-content>

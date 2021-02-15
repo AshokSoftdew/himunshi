@@ -1,0 +1,189 @@
+<div class="example-container">
+  <form class="example-container" [formGroup]="bukuSettingForm" novalidate>
+    <div fxFlex  fxLayout="row" fxLayout.lt-lg="column" >
+      <div fxFlexFill>
+        <mat-form-field style="width: 22%;">
+        <input  matInput placeholder="Android Latest App Version" formControlName="android_latest_app_version">
+            <mat-error *ngIf="!!bukuSettingForm.controls.android_latest_app_version.errors?.required && !!bukuSettingForm.controls.android_latest_app_version.touched">Android Latest App Version is required</mat-error>
+        </mat-form-field> &nbsp; &nbsp;
+    <!--
+        <mat-form-field style="width: 22%;">
+          <input  matInput placeholder="IOS Latest App Version" formControlName="ios_latest_app_version" >
+          <mat-error *ngIf="!!bukuSettingForm.controls.ios_latest_app_version.errors?.required && !!bukuSettingForm.controls.ios_latest_app_version.touched">IOS Latest App Version is required</mat-error>
+        </mat-form-field> &nbsp; &nbsp;
+    -->
+        <mat-form-field style="width: 22%;">
+          <input  matInput placeholder="Max Allowable Free Customer" formControlName="max_allowable_free_customer" >
+          <mat-error *ngIf="!!bukuSettingForm.controls.max_allowable_free_customer.errors?.required && !!bukuSettingForm.controls.max_allowable_free_customer.touched">Max Allowable Free Customer is required</mat-error>
+        </mat-form-field> &nbsp; &nbsp;
+
+        
+        <mat-form-field style="width: 22%;">
+          <input  matInput placeholder="Enter Message to Show" formControlName="message_to_show" >
+         
+
+          <!-- <mat-select placeholder="Select Message To Show" formControlName="message_to_show">
+            <mat-option value="0">No</mat-option>
+            <mat-option value="1">Yes</mat-option>
+          </mat-select> -->
+
+          <!-- <input  matInput placeholder="Message To Show" formControlName="message_to_show" > -->
+            <!-- <mat-error *ngIf="!!bukuSettingForm.controls.message_to_show.errors?.required && !!bukuSettingForm.controls.message_to_show.touched">Message To Show is required</mat-error> -->
+        </mat-form-field> &nbsp; &nbsp;
+       
+        <mat-form-field style="width: 22%;">
+          <input  matInput placeholder="Enter Message id" formControlName="message_id" >
+          <!-- <mat-select placeholder="Select Message To Show" formControlName="message_to_show">
+            <mat-option value="0">No</mat-option>
+            <mat-option value="1">Yes</mat-option>
+          </mat-select> -->
+
+          <!-- <input  matInput placeholder="Message To Show" formControlName="message_to_show" > -->
+            <!-- <mat-error *ngIf="!!bukuSettingForm.controls.message_to_show.errors?.required && !!bukuSettingForm.controls.message_to_show.touched">Message To Show is required</mat-error> -->
+        </mat-form-field> &nbsp; &nbsp;
+
+
+    <!--
+        <mat-form-field style="width: 22%;">
+            <mat-select placeholder="Select Report Excel Download" formControlName="report_excel_download">
+              <mat-option value="0">No</mat-option>
+              <mat-option value="1">Yes</mat-option>
+            </mat-select>
+            <mat-error *ngIf="!!bukuSettingForm.controls.report_excel_download.errors?.required && !!bukuSettingForm.controls.report_excel_download.touched">Report Excel Download is required</mat-error>
+        </mat-form-field> &nbsp; &nbsp;
+    -->
+
+        <!-- <mat-form-field style="width: 22%;">
+                <mat-select placeholder="Select Free Sms Service" formControlName="free_sms_service">
+                  <mat-option value="0">No</mat-option>
+                  <mat-option value="1">Yes</mat-option>
+                </mat-select>
+                <mat-error *ngIf="!!bukuSettingForm.controls.free_sms_service.errors?.required && !!bukuSettingForm.controls.free_sms_service.touched">Free Sms Service is required</mat-error>
+              </mat-form-field>  -->
+      </div>
+    </div> 
+
+    <div fxFlex  fxLayout="row" fxLayout.lt-lg="column" >
+      <div fxFlexFill>
+        <!-- <mat-form-field style="width: 22%;">
+          <input  matInput placeholder="Max Daily Free SMS" formControlName="max_daily_free_sms" >
+          <mat-error *ngIf="!!bukuSettingForm.controls.max_daily_free_sms.errors?.required && !!bukuSettingForm.controls.max_daily_free_sms.touched">Max Daily Free SMS is required</mat-error>
+        </mat-form-field> &nbsp; &nbsp; -->
+        
+
+
+        <mat-form-field style="width: 22%;">
+
+          <mat-select placeholder="Select Mark Attendance" formControlName="mark_attendance">
+            <mat-option value="0">No</mat-option>
+            <mat-option value="1">Yes</mat-option>
+          </mat-select>
+          <!-- <input  matInput placeholder="Mark Attendance" formControlName="mark_attendance" > -->
+            <mat-error *ngIf="!!bukuSettingForm.controls.mark_attendance.errors?.required && !!bukuSettingForm.controls.mark_attendance.touched">Mark Attendance is required</mat-error>
+        </mat-form-field> &nbsp; &nbsp;
+       
+      <!--
+        <mat-form-field style="width: 22%;">
+          <mat-select placeholder="Cash Sale" formControlName="cash_sale">
+              <mat-option value="0">No</mat-option> 
+              <mat-option value="1">Yes</mat-option>
+            </mat-select>
+        </mat-form-field> &nbsp; &nbsp;
+      -->
+        <!-- <mat-error *ngIf="!!bukuSettingForm.controls.cash_sale.errors?.required && !!bukuSettingForm.controls.cash_sale.touched">Mark Attendance is required</mat-error> -->
+        
+        <table>
+          <tr>
+              <td>
+                <table>
+                  <tr>
+                    <td>
+                       Country
+                    </td> 
+                    <td>
+                      Free Sms Count
+                    </td>
+                  </tr>
+                  <tr *ngFor="let isdCode of isdCodes">
+                        <td>
+                          <mat-list-item>
+                            <input type="checkbox" class="getcheckboxValues" id="countryCode_{{isdCode.code}}" value="{{isdCode.code}}" /> {{ isdCode.name }}
+                          </mat-list-item>
+                        </td>
+                        <td>
+                          <input style="width: 60px;" maxlength="3" class="getcheckboxValuesKeyup" type="text" id="text_{{isdCode.code}}"> 
+                        </td>
+                    </tr>
+                </table>
+              </td>
+              <td style="width: 30px;">&nbsp;</td>
+              <td>
+                <table>
+                  <tr>
+                    <td>
+                       Country
+                    </td>
+                    <td>
+                      Whatsapp Support
+                    </td>
+                  </tr>
+                  <tr *ngFor="let isdCode of isdCodes">
+                        <td>
+                          <mat-list-item>
+                            <input type="checkbox" class="getWhatsappValues" id="SupportcountryCode_{{isdCode.code}}" value="{{isdCode.code}}" /> {{ isdCode.name }}
+                          </mat-list-item>
+                        </td>
+                        <td>
+                          <input class="getWhatsappValuesKeyup" type="text" id="support_{{isdCode.code}}"> 
+                        </td>
+                    </tr>
+                </table>
+              </td>
+              <td> 
+                  <div class="example-loading-shade" *ngIf="isLoadingResults">
+                    <mat-spinner *ngIf="isLoadingResults"></mat-spinner>
+                  </div>
+              </td>
+          </tr>   
+        </table>
+
+
+        
+
+
+        <!-- <mat-form-field style="width: 22%;">
+          <mat-select class="form-control" name="isdCodes" id="isdCodes" formControlName="isdCodes" placeholder="Free SMS service available in Countries" [(ngModel)]="selectedisd"  multiple >
+            <mat-option *ngFor="let isdCode of isdCodes" [value]="isdCode.code">{{isdCode.name}}  {{isdCode.dial_code}} ({{isdCode.code}})</mat-option>
+          </mat-select>
+        </mat-form-field> &nbsp; &nbsp;<br /> -->
+
+        <!-- <label  *ngFor="let isdCodeSec of isdCodesSecond; let i = index">
+          <input type="checkbox" [value]="isdCodeSec.code"> {{isdCodeSec.name}}   <input type="text" id="text_{{isdCodeSec.code}}"> <br /> 
+        </label> -->
+<!-- 
+        <mat-form-field style="width: 22%;">
+          <mat-select class="form-control" name="isdCodesSecond" id="isdCodesSecond" formControlName="isdCodes" placeholder="Free SMS service available in Countries" [(ngModel)]="selectedisd"  multiple >
+            <mat-option *ngFor="let isdCodeSec of isdCodesSecond" [value]="isdCodeSec.code">{{isdCodeSec.name}}  {{isdCodeSec.dial_code}} ({{isdCodeSec.code}})</mat-option>
+          </mat-select>
+        </mat-form-field> &nbsp; &nbsp;
+       -->
+
+       <input type="hidden" id="countryJson" value="">
+       <input type="hidden" id="whatssupportJson" value="">
+    </div> 
+      
+    </div>
+    <div fxFlex  fxLayout="row" fxLayout.lt-md="column">
+      <div fxFlexFill>
+          <br />
+        <button mat-raised-button color="primary" [disabled]="!bukuSettingForm.valid" class="w-100" (click)="saveBukuSetting()">Update Settings</button>
+      </div>
+    </div>
+
+  </form>
+
+  <!-- <mat-list-item *ngFor="let isdCode of isdCodes" >
+    <mat-checkbox class="getcheckboxValues" [(ngModel)]="isdCode.isSelected"  value="isdCode.code">{{ isdCode.code }}</mat-checkbox>   <input type="text" id="text_{{isdCode.code}}"> 
+  </mat-list-item> -->
+
+</div>

@@ -1,0 +1,253 @@
+<!--<div class="mb-20" fxLayout="row" fxLayout.lt-md="column" fxFlex fxLayoutGap="20px">
+    <div>
+        <app-stat [bgClass]="'danger'" [icon]="'person_add'" [count]="NewUsers" [label]="'Today New Users!'"></app-stat>
+    </div>
+    <div>
+        <app-stat [bgClass]="'warn'" [icon]="'people'" [count]="ReturningUsersCount" [label]="'Today Return Users!'"></app-stat>
+    </div>
+    <div>
+        <app-stat [bgClass]="'success'" [icon]="'map'" [count]="TotalCountriesOfUsers" [label]="'Countries Count!'"></app-stat>
+    </div>
+    <div>
+        <app-stat [bgClass]="'info'" [icon]="'people'" [count]="TotalReferrals" [label]="'Total Referrals!'"></app-stat>
+    </div>
+</div>
+<div class="mb-20" fxLayout="row" fxLayout.lt-md="column" fxFlex fxLayoutGap="20px">
+    <div >
+        <app-stat [bgClass]="'success'" [icon]="'people'" [count]="TotalBackupUpUsersCount" [label]="'Backup Taken Users!'"></app-stat>
+    </div>
+    <div >
+        <app-stat [bgClass]="'danger'" [icon]="'people'" [count]="TotalCountDontHaveGCMID" [label]="'Dont have FCM!'"></app-stat>
+    </div>
+    <div >
+        <app-stat [bgClass]="'warn'" [icon]="'people'" [count]="EMIActivationFeatureCount" [label]="'EMI Feature Activated!'"></app-stat>
+    </div>
+</div>-->
+<div class="mb-20" fxLayout="row" fxLayout.lt-md="column" fxFlex fxLayoutGap="20px">
+    <div>
+        <app-stat [bgClass]="'danger'" [count]="NewUsers" [label]="'Today New Users!'"></app-stat>
+    </div>
+    <div>
+        <app-stat [bgClass]="'warn'"  [count]="ReturningUsersCount" [label]="'Today Return Users!'"></app-stat>
+    </div>
+    <!--<div>
+        <app-stat [bgClass]="'success'"  [count]="TotalCountriesOfUsers" [label]="'Countries Count!'"></app-stat>
+    </div> -->
+    <div>
+        <app-stat [bgClass]="'info'" [count]="TotalReferrals" [label]="'Total Referrals!'"></app-stat>
+    </div>
+    <div >
+        <app-stat [bgClass]="'success'"  [count]="TotalBackupUpUsersCount" [label]="'Backup Taken Users!'"></app-stat>
+    </div>
+    <div >
+        <app-stat [bgClass]="'danger'"  [count]="TotalCountDontHaveGCMID" [label]="'Dont have FCM!'"></app-stat>
+    </div>
+<!--
+    <div>
+        <a [routerLink]="['/userEmiDetails']"><app-stat [bgClass]="'warn'" [count]="EMIActivationFeatureCount" [label]="'EMI Feature Activated!'"></app-stat></a>
+    </div>
+-->
+    <div>
+        <app-stat [bgClass]="'danger'"  [count]="SMSstring" [label]="'Sucess/Fail SMS'"></app-stat>
+    </div>
+<!--
+    <div>
+        <app-stat [bgClass]="'info'" [count]="StaffServiceEnabledUsers" [label]="'Staff Feature Activation!'"></app-stat>
+    </div>
+-->
+</div>
+<div class="mb-20" fxLayout="row" fxLayout.lt-md="column" fxFlex fxLayoutGap="20px">
+   
+</div>
+
+
+
+<div class="mb-20">
+    <div fxFlex>
+         <!--  <mat-form-field>
+              <input matInput placeholder="filter" (keyup)="applyFilter($event.target.value)">
+          </mat-form-field>  -->
+            <table style="font-size: 15px;border-collapse: collapse; " cellpadding="1"  class="mat-elevation-z8">
+                <tr style="border: 1px solid black">
+                    <th style="border: 1px solid black" *ngFor="let item of displayedColumnsSigned">
+                        {{item.heading}}
+                    </th>
+                <tr>
+                <tr style="text-align: center; border: 1px solid black">
+                   <td style="border: 1px solid black" *ngFor="let itemCount of SignedUpUsersSourceCount">
+                            {{itemCount.row}}
+                    </td>
+                <tr>
+   
+            </table>
+            <div class="example-loading-shade" *ngIf="isLoadingResults">
+                <mat-spinner *ngIf="isLoadingResults"></mat-spinner>
+            </div>
+            
+           
+    </div>
+  </div>
+
+
+<div class="example-container">
+    <div fxFlex  fxLayout="row" fxLayout.lt-lg="column" >
+        <div fxFlexFill>
+        
+          <mat-form-field style="width: 22%;">
+            <mat-label>New Users From</mat-label>
+            <input matInput type="date" id="newusersfrom" name="newusersfrom" />
+          </mat-form-field> &nbsp; &nbsp;
+          <mat-form-field style="width: 22%;">
+            <mat-label>New Users To</mat-label>
+            <input matInput type="date" id="newusersto" name="newusersto" />
+         </mat-form-field> &nbsp; &nbsp;
+
+         
+               <button mat-raised-button  color="primary" class="w-100" (click)="ShowUsersOnGraph()">Show</button>
+       
+
+
+          <!-- <mat-form-field style="width: 22%;"> -->
+          <!-- </mat-form-field> &nbsp; &nbsp;
+          <mat-form-field style="width: 22%;"> -->
+          <!-- </mat-form-field> &nbsp; &nbsp; -->
+        </div>
+      </div>
+
+</div>
+
+<div  style="align-items: center;">
+
+    <div  style="display: block; width: 95%; height: 400px; margin-top: 30px;">
+        <canvas baseChart
+          [datasets]="barChartData"
+          [labels]="barChartLabels"
+          [options]="barChartOptions"
+          [plugins]="barChartPlugins"
+          [legend]="barChartLegend"
+          [colors]="Barcolors"
+          [chartType]="barChartType">
+        </canvas>
+        <br /><br /><br /><br /><br />
+    </div>
+    <br /><br /><br /><br /><br /><br /><br />
+    <div  style="display: block; width: 95%; height: 400px; margin-top: 30px;">
+        <canvas baseChart
+          [datasets]="CountryiesbarChartData"
+          [labels]="CountriesUsersbarChartLabels"
+          [options]="barChartOptions"
+          [plugins]="barChartPlugins"
+          [legend]="barChartLegend"
+          [colors]="CountriesBarcolors" 
+          [chartType]="barChartType">
+        </canvas>
+        <br /><br /><br />
+    </div>
+    <br /><br /><br /><br /><br /><br />
+    <div  style="display: block; width: 95%; height: 400px; margin-top: 30px;">
+        <canvas baseChart
+          [datasets]="AppVersionbarChartData"
+          [labels]="AppVersionbarChartLabels"
+          [options]="barChartOptions"
+          [plugins]="barChartPlugins"
+          [legend]="barChartLegend"
+          [colors]="AppversionBarcolors" 
+          [chartType]="barChartType">
+        </canvas>
+        <br /><br /><br />
+    </div>
+    <br /><br /><br /><br /><br /><br /><br /><br />
+    <div  style="display: block; width: 80%; height: 400px; margin-top: 30px;">
+        <canvas baseChart
+          [datasets]="LangbarChartData"
+          [labels]="LangbarChartLabels"
+          [options]="barChartOptions"
+          [plugins]="barChartPlugins"
+          [legend]="barChartLegend"
+          [colors]="LangBarcolors" 
+          [chartType]="barChartType">
+        </canvas>
+        <br /><br /><br />
+    </div>
+    <br /><br /><br />
+    <div  style="display: block; width: 80%; height: 400px; margin-top: 30px;">
+        <canvas baseChart
+          [datasets]="BusinessCateChartData"
+          [labels]="BusinessCatArrayChartLabels"
+          [options]="barChartOptions"
+          [plugins]="barChartPlugins"
+          [legend]="barChartLegend"
+          [colors]="BusinessCateBarcolors" 
+          [chartType]="barChartType">
+        </canvas>
+        <br /><br /><br />
+    </div>
+    <br />
+    <div  style="display: block; width: 80%; height: 400px; margin-top: 30px;">
+        <canvas baseChart
+          [datasets]="ServiceCateChartData"
+          [labels]="ServiceCatArrayChartLabels"
+          [options]="barChartOptions"
+          [plugins]="barChartPlugins"
+          [legend]="barChartLegend"
+          [colors]="ServiceCateBarcolors" 
+          [chartType]="barChartType">
+        </canvas>
+        <br /><br /><br />
+    </div>
+
+
+</div>
+
+
+    <br /><br />
+<!-- 
+<div class="mb-20" flFlex flexLayout="row" flexLayout.lt-md="column">
+    <div fxFlex>
+        <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+            <ng-container matColumnDef="position">
+                <th mat-header-cell *matHeaderCellDef> No. </th>
+                <td mat-cell *matCellDef="let element"> {{element.position}} </td>
+            </ng-container>
+            <ng-container matColumnDef="name">
+                <th mat-header-cell *matHeaderCellDef> Name </th>
+                <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+            </ng-container>
+            <ng-container matColumnDef="weight">
+                <th mat-header-cell *matHeaderCellDef> Weight </th>
+                <td mat-cell *matCellDef="let element"> {{element.weight}} </td>
+            </ng-container>
+            <ng-container matColumnDef="symbol">
+                <th mat-header-cell *matHeaderCellDef> Symbol </th>
+                <td mat-cell *matCellDef="let element"> {{element.symbol}} </td>
+            </ng-container>
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+    </div>
+</div>
+
+<div class="mb-20" fxLayout="row" fxLayout.lt-md="column" fxFlex fxLayoutGap="20px">
+    <div fxFlex *ngFor="let item of places">
+        <mat-card>
+            <img mat-card-image [src]="item.imgSrc">
+            <mat-card-header style="justify-content: center">
+                <mat-card-title>
+                    <h3 class="m-0">{{item.place}}</h3>
+                </mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+                <p>
+                    {{item.description}}
+                </p>
+            </mat-card-content>
+
+            <mat-card-actions>
+                <button mat-button>{{item.charge}}</button>
+                <button mat-button>
+                    <mat-icon class="nav-icon">location_on</mat-icon> {{item.location}}
+                </button>
+            </mat-card-actions>
+        </mat-card>
+    </div>
+</div> -->

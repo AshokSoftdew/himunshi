@@ -1,0 +1,41 @@
+<mat-toolbar color="primary" style="top:0px;">
+  <img width="200" height="90" style="top:5px; margin-left: -50px;" src="{{ bukulogo }}" />
+</mat-toolbar>
+
+<h2 class = "tp-h2"> Manage SMS </h2>
+<div class="tp-messagebox"> 
+      The free SMS service is only for Indian users right now. We are working on adding the SMS service for other countries also and will be offered soon. 
+</div>
+
+<div class="tp-messagebox"> 
+  Munshi provides daily {{free_messages}} free SMS's which can be sent to your customers at the time of creating new transactions /entries.
+If you want to send more SMS's in a day, you can buy SMS here to set your daily limit as you want. Munshi will continue 
+to provide {{free_messages}} free SMS everyday. The SMS are provided at very cheap rate 10 paisa/SMS
+</div>
+
+   <!-- <mat-checkbox class = "tp-margin" [(ngModel)] = "checked">Checked</mat-checkbox>
+   <mat-checkbox class = "tp-margin" [(ngModel)] = "indeterminate">Indeterminate</mat-checkbox> -->
+        <!-- <mat-radio-group class = "tp-radio-group" *ngFor = "let radiovalue of sms_options" [(ngModel)] = "favoriteSeason">
+          
+          <mat-radio-button class = "tp-radio-button" [value] = "radiovalue.key">
+              {{radiovalue.val}}
+          </mat-radio-button>
+
+
+        </mat-radio-group> -->
+
+          <mat-radio-group class = "tp-radio-group" *ngFor = "let radiovalue of sms_options" aria-label="Select an option">
+                   <mat-radio-button class = "tp-radio-button"  [value] = "radiovalue.id">{{radiovalue.sms}} SMS in {{radiovalue.val}} INR</mat-radio-button>
+          </mat-radio-group>
+          <br />
+          <div class="paynow-btn"> 
+            <div fxFlexFill>
+              <button mat-raised-button color="primary" class="w-100" (click)="saveManageSms()">Pay Now</button>
+            </div>
+          </div>
+
+<!--    
+
+<div class = "tp-selected-value">
+  Selected Season: {{favoriteSeason}}
+</div> -->

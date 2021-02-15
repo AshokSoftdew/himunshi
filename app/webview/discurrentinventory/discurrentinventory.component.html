@@ -1,0 +1,75 @@
+  <mat-toolbar color="primary" style="top:0px;">
+    <mat-toolbar-row>
+     <h5>{{title}}</h5>
+   </mat-toolbar-row>
+  </mat-toolbar>
+  
+  
+  <div class="container" style="margin-top:64px;">      
+    <div class="example-container mat-elevation-z8 table-wrapper table-responsive-vertical shadow-z-1">
+    
+        <table  mat-table [dataSource]="dataSource" class=" table-responsive">
+        
+          <ng-container matColumnDef="ProImage">
+            <th mat-header-cell *matHeaderCellDef> Your Items </th>
+            <td mat-cell *matCellDef="let transaction" style="padding-left:10px;"> <img height="60" width="60" src="{{transaction.ProImage}}" /></td>
+            <td mat-footer-cell *matFooterCellDef>  </td>
+          </ng-container>
+            
+          <ng-container matColumnDef="ProName">
+            <th mat-header-cell *matHeaderCellDef> Inventory Details </th>
+            <td mat-cell *matCellDef="let transaction"> 
+              <mat-form-field> 
+                <input matInput value='{{transaction.ProName}}' id="ProName_{{transaction.Id}}" placeholder="Product Name"> </mat-form-field>  
+              <br /> 
+              <mat-form-field> 
+                <input matInput value='{{transaction.PurchasePrice}}'  id="PurchasePrice_{{transaction.Id}}"  placeholder="Purchase Price"> </mat-form-field> 
+              <br />
+              <mat-form-field> 
+                <input matInput value='{{transaction.SellingPrice}}'  id="SellingPrice_{{transaction.Id}}"  placeholder="Selling Price"> </mat-form-field></td>
+            <td mat-footer-cell *matFooterCellDef>  </td>
+          </ng-container>
+          
+          <ng-container matColumnDef="CurrentInventory">
+            <th mat-header-cell *matHeaderCellDef> Quantity </th>
+            <td mat-cell *matCellDef="let transaction">  
+            <mat-form-field> 
+              <input matInput id="CurrentInventory_{{transaction.Id}}" value='{{transaction.CurrentInventory}}' placeholder="Quantity"> 
+            </mat-form-field>   <!--<input [hidden] value='{{transaction.Id}}'>-->
+                    
+            </td>
+
+            <td mat-footer-cell *matFooterCellDef></td>
+ 
+          </ng-container> 
+          <ng-container matColumnDef="Action">
+            <th mat-header-cell *matHeaderCellDef> Action </th>
+            <td mat-cell *matCellDef="let transaction">  
+              <button mat-icon-button color="primary" (click)="lgbtnclick(transaction.Id)">Save</button > 
+              <button mat-icon-button color="primary" (click)="EditMe(transaction.Id)" ><mat-icon aria-label="Edit">edit</mat-icon></button >
+                <!-- (click)="openDialog('Update',transaction)"-->
+            </td>
+            <td mat-footer-cell *matFooterCellDef></td>
+          </ng-container>
+
+  
+          <tr mat-header-row *matHeaderRowDef="displayedColumns;  sticky: true"> </tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+          <!-- <tr mat-footer-row *matFooterRowDef="displayedColumns; sticky: true"></tr> -->
+
+          <mat-paginator [pageSizeOptions]="[5,10,15]" showFirstLastButtons></mat-paginator>
+        </table>
+
+     
+      </div> 
+
+    </div>
+  
+    <footer style="position:fixed; bottom:0px; width:100%; height: 60px; " class="mat-typography">
+      <button style="margin:10px; right:0px; position:fixed;" mat-raised-button (click)="openCreate()">Add Inventory</button> 
+    </footer>
+ 
+
+    
+    
+ 

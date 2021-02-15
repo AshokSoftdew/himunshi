@@ -1,0 +1,35 @@
+<div class="example-container">
+    <form class="example-container" [formGroup]="brandForm" novalidate>
+    <div fxFlex  fxLayout="row" fxLayout.lt-lg="column" >
+      <div fxFlexFill>
+        <mat-form-field>
+          <input matInput placeholder="BrandName" formControlName="brandName" >
+            <mat-error *ngIf="brandForm.controls.brandName.errors?.required && brandForm.controls.brandName.touched">Brand Name is required</mat-error>
+        </mat-form-field>
+        <!-- <mat-form-field>
+          <input matInput placeholder="" formControlName="brand_id" >
+            
+        </mat-form-field> -->
+        <!-- <mat-form-field>
+          <input matInput placeholder="BrandName" formControlName="brandName1" >
+            <mat-error *ngIf="brandForm.controls.brandName1.errors?.required && brandForm.controls.brandName1.touched">Brand Name is required</mat-error>
+        </mat-form-field> -->
+      </div>
+    </div>
+  
+    <!-- <mat-form-field>
+      <textarea matInput placeholder="Textarea"></textarea>
+    </mat-form-field>
+  
+    <mat-form-field>
+      <mat-select placeholder="Select">
+        <mat-option value="option">Option</mat-option>
+      </mat-select>
+    </mat-form-field> -->
+    <div fxFlex  fxLayout="row" fxLayout.lt-md="column">
+      <div fxFlexFill>
+        <button mat-raised-button color="primary" [disabled]="!brandForm.valid" class="w-100" (click)="saveBrand()">Primary</button>
+      </div>
+    </div>
+  </form>
+  </div>
